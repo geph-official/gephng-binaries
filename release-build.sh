@@ -29,3 +29,7 @@ mv geph-client $BUILDDIR/geph-client-linux-armeabi-$VERSION
 echo "Building for LinArm64..."
 GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -v -asmflags -trimpath -ldflags "$LDFLAGS" .
 mv geph-client $BUILDDIR/geph-client-linux-arm64-$VERSION
+
+echo "Building for Mac64..."
+GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -v -asmflags -trimpath -ldflags "$LDFLAGS"
+mv geph-client $BUILDDIR/geph-client-macos-amd64-$VERSION
