@@ -6,7 +6,7 @@ export BUILDDIR="$(pwd)/build"
 if cd geph2; then git pull; else git clone https://github.com/geph-official/geph2.git; cd geph2; fi
 
 # Release build
-export VERSION=$(git describe)
+export VERSION=$(git describe --tags)
 export LDFLAGS="-X main.GitVersion=$VERSION -w -s"
 cd cmd/geph-client
 
