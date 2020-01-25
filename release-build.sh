@@ -28,6 +28,13 @@ GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -v -asmflags -trimpath  -ldflags 
 mv geph-exit $BUILDDIR/geph-exit-linux-amd64-$VERSION
 cd ../geph-client
 
+echo "Building for Lin64 [BRIDGE]..."
+cd ../geph-bridge
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -v -asmflags -trimpath  -ldflags "$LDFLAGS" .
+mv geph-bridge $BUILDDIR/geph-bridge-linux-amd64-$VERSION
+cd ../geph-client
+
+
 echo "Building for LinArm32..."
 GOOS=linux GOARCH=arm CGO_ENABLED=0 go build -v -asmflags -trimpath -ldflags "$LDFLAGS" .
 mv geph-client $BUILDDIR/geph-client-linux-armeabi-$VERSION
