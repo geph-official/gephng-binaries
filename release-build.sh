@@ -7,7 +7,7 @@ if cd geph2; then git pull; else git clone https://github.com/geph-official/geph
 
 # Release build
 export VERSION=$(git describe --tags)
-export LDFLAGS="-X main.GitVersion=$VERSION -w -s -buildid="
+export LDFLAGS="-X main.GitVersion=$VERSION -w -buildid="
 cd cmd/geph-client
 
 go clean -cache
