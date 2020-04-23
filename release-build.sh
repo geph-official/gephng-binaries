@@ -4,10 +4,11 @@ mkdir -p build
 export BUILDDIR="$(pwd)/build"
 
 if cd geph2; then git pull; else git clone https://github.com/geph-official/geph2.git; cd geph2; fi
+go mod vendor
 
 # Release build
 export VERSION=$(git describe --tags)
-export LDFLAGS="-X main.GitVersion=$VERSION -w -buildid="
+export LDFLAGS="-X main.GitVersion=$VERSION -s -w -buildid="
 cd cmd/geph-client
 
 go clean -cache
@@ -48,3 +49,8 @@ mv geph-client $BUILDDIR/geph-client-linux-arm64-$VERSION
 echo "Building for Mac64..."
 GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -v -trimpath -ldflags "$LDFLAGS"
 mv geph-client $BUILDDIR/geph-client-macos-amd64-$VERSION
+
+echo "Building for Android..."
+xgo -go 1.13.1 --targets=android-21/arm,android-21/arm64 -ldflags="$LDFLAGS" github.com/geph-official/geph2/cmd/geph-client
+mv geph-client-android-21-arm $BUILDDIR/geph-client-android-armeabi-$VERSION
+mv geph-client-android-21-arm64 $BUILDDIR/geph-client-android-arm64-$VERSION
